@@ -1,0 +1,303 @@
+java
+->platform independent
+portability->write once and run anywhere
+3 main components->jvm,jre,jdk
+jvm-java virtual machine
+java program(platform independent)-compiler-bytecode-jvm-machine code-cpu-output
+
+jvm is platform dependent(jit compiler (just in time compiler))
+jre-(java runtime environment) it has-jvm+class libraries
+jdk(java development kit)
+
+ques->why in a java file we can have a single public class
+jvm needs it that is why there is a restriction
+1.main method inside public class
+2.public class name should be same as file name
+variables
+1.primitive-char(2 bytes),byte(1 byte,default-0,signed),
+    short(),int,long,float,double,boolean
+2.reference/non-primitive-class,interface,array,string,enum etc
+
+->widening/automatic->whenever lower to higher data type going
+->down casting->non-automatic
+->promotion addition of two smaller same data types leads to higher data type
+
+how float and double are stored in the memory
+
+->reference data type(non-primitive)
+no concept of pass by reference or pointers
+
+string->(string literals and string objects)
+
+wrapper classes ->1.autoboxing->conversion of primitive data type to reference {wrapper class}
+                  2.unboxing->opposite of it
+static
+static method can access only access static variables
+no use of super
+final
+
+method ->perform some task
+access specifiers-public,private,protected,default
+types of method->system defined,user defined , overloaded , overridden,static method(it is compile time)
+final method
+abstract method->always inside abstract class,implementation in child class
+vararible parameters ->int ....
+
+constructors->it is used to create an instance
+also used to initialize the instance var
+it can not be static,final,abstract,synchronized,inherited
+can not have any return type
+why same name as class->for easeness
+return type is class->implecitly
+
+java memory management
+2 types of memory -1.stack 2.heap
+both are created by jvm and stored in RAM
+heap has more memory than stack
+----stack---
+it store temp var and separate memory block for method
+primitive data types are stored
+store reference of the heap objects(objects with new keyword)
+types-1.strong reference(stack have a ref of object in heap (garbage collector does not work on it))
+2.weak reference
+each thread has its own stack memory
+varaible in scope ->in stack
+out of the scope ->not in stack
+stack full error->java lang stackoverflowerror
+
+-----heap-----
+division -1..young generation-division->1.eden(new object enters) 2.s0(age of each is 1 after first sweep left ones enters(minor gc))
+                                            3.s1(age of each is 2 after second sweep left ones enters(minor gc))
+ 2. old generation(after threshold the object gets promoted to it(major gc))
+3.non heap(metaspace(permanent generation))(class variables(with static), constant are stored)
+
+garbage collector->mark and sweep algo
+                 ->mark and sweep with compact memory
+versions of gc->1.serial gc(single thread used) 2.parallel gc(default in java 8) 3.concurrent mark and sweep(cms) 4.gi garbage
+
+types of classes
+1.concrete class
+2.abstract class
+3.super class and sub class
+4.object class
+5.nested class
+    -inner class(non static nested class)
+    -anonymous inner class
+    -member inner class
+    -local inner class
+    -static nested class/static class
+6.generic class
+-use of <> is taken to define the datatype of the  variable used in the class
+-inheritance can be implemented -can be generic or cannot be
+-generic methods are also supported
+-raw type and bounded generics(upper and multi bound generics)
+-wildcards(more flexible than generic methods)-1.upperbounded 2.lowerbounded 3.unbounded
+-type erasure-<T> gets replaced to the super class when u generate the byte code(eg.object,number)
+-public <T extends Number> void func(List<T>source,List<T>destination) ->this is an example of generic method
+-public void func(List<? extends Number>source,List<? extends String>destination)- this is wildcard
+
+7.pojo class
+-plain old java object , contains variables and its getter and setter methods
+-class should be public,just a normal Java object used to represent data.
+-public default constructor
+-no annotations should be used like @Tablr , @Entity, @Id etc
+-it should not extend any class or implement any interface
+-where it is used 1.when a request comes to our system
+
+
+8.enum class(.values(),.ordinal(),.valueOf(),.name())
+-it has collection of constants , constants are static and final implicitly
+-it can not extend any class as it internally extends java.lang.enum class
+-it can implement interfaces
+-it can have variables,constructors,methods
+-it can not be initiated(as its constructor will be private only even you give default ,in bytecode
+    it make it private)
+-no other class can extend enum class
+-it can have abstract method and all the constant should implement that abstract method
+-variables and methods defined in the enum will be applicable to all the entries in the enum
+-benefit of enum class when we create constant through static and final keyword
+types
+-normal enum class
+-enum with custom values
+-method override by constants
+-absract method in enum
+-interface implementation in enum
+-whats the advantage of enum class
+
+9.final class-cannot inherit
+
+10.singleton class-meant to create only 1 and 1 object
+types to make it--
+-eager initialization-class ke andar hi object bana do
+-lazy initialization-object is created when instance is made of the class
+                    -parallel threads aaye to mamla gobar ho jayega 2 object ban jayenge
+-synchronization block-lock and unlock, ensures a single thread is creating the instance at a time
+-double check(there is a memory issue, resolved through volatile instance variable)-solves the problem of concurrency
+              -if any object is declared volatile then any read or write operation on it is directly from the memory not from the cache
+
+-bill pugh solution
+-enum singleton
+
+11.immutable class
+-we can not change the value of an object once it is created
+-declare class as final so that it can not be extended
+-all class members should be private so that direct access can be avoided
+-and class members are initialized only once using constructor
+-there should not be any setter methods which is generally use to change the value
+-just getter methods and returns copy of the member variable
+
+12.wrapper class-chatgpt kar le and also upar bhi padh le already likh rakha h
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+before spring or spring boot
+->study servlet and servlet container
+servlet is a java class which handles client request process it and return the response
+servlet conatiner manages the servlets
+more than one servlet can be there
+each servlet can have many functions like doget dopost etc
+web.xml is the problem 
+
+web.xml-->
+it contains the servlet mappings like customer hits some api and that is to mapped to some servlet 
+eg->
+/demoservlet/firstendpoint   this api is mapped to servlet 1 in the web.xml code
+
+
+input reques--> tomcat(servlet container)(application is deplyoed here)-->use the web.xml to determine which servlet has to be called
+-->invokes particular servlet-->response-->tomcat-->response
+
+spring solves the problems-->
+1.removal of web.xml->web.xml becoms too big and diffcult to manages->spring framework introduce annotations based configurations
+
+2.inversion of control(ioc)->it is more felxible way to manage object dependencies and its lifecycle(through dependecy injection)
+@component - tells spriong that you have to amange ethis class or bean
+@autowired - tells spring to resolve and add this object dependecy
+during runtime a object will be created and will perform functions
+
+3.unit testing is hard
+
+4.difficult to manage rest api
+
+other areas where spring makes life easy for developer is integration with certain tech like hibernate
+
+input->servlet container(tomcat)(our application)->dispatcherservlet->choose the controller ->uses handlermapping
+                                                                    ->create an innstance->ioc
+                                                                    ->invokes controller method->respective api get invoked
+                                                                    ->response
+
+@enablewebmvc->loads all the depedency
+
+pom.xml
+
+configurations class
+
+dispatcher servlet class
+
+spring boot solves challengs with spring
+1.depedency management(pom.xml)->no need for adding different dependencies separately and also their versions
+
+2.auto configuration ->no need for separately running dispatcherservlet , appconfig , enablewebmvc , componentmvc
+,componentscan . spring boot add internally by default
+
+3.embedded server->no need to create war
+    in traditional spring mvc application we need to build a war file which is a packaged file containing your application classes
+    jsp pages , configuration files , dependencies
+    then we need to deploy this war file to a servlet container like tomcat
+    but in spring boot servlet container is already embedded we dont have to do do all this stuff just run the application thats all
+
+what is spring boot
+->it provides a quick way to create a production ready application
+->spring based framework
+->it support convention over configuration->use default for configuration and if developer dont want to go with convention they can override it 
+->it also help to run an application as quick as possible
+
+jar->java archive ->stand alone java application
+war->web archive->html , css , js many more
+
+            dto           utility       entity         configuration
+             |               |               |                 |
+        |----------------------------------------------------------------|
+        |                                                                |
+client->|->controller------------>service----------->repository layer    |
+        |   layer                   layer                       |        |
+        | ------------------------------------------------------|--------|
+                                                                DB
+
+
+controller layer-->
+    mapping of api parameter to request dto
+    hosts the api
+    @controller
+    @restcontroler
+
+service layer-->business logic
+
+repository layer---->DB
+
+DTO->data transfer object
+    client sending data post request
+    types-1.request dto
+          2.response dto
+
+
+utility->put anything which is common (helper methods)
+
+entity->@entity sql ki baate(classes which are direct representation of tables)
+
+configuration->application.property files(.env file)
+
+
+before maven ant was was there
+    it required what to do and how to do but in the case of maven only what to do
+Maven->its a project management tool
+    it uses POM project obejct model
+
+    build lifecycle
+    1.validate-project structure
+    2.compile-source code
+    3.test the code
+    4.package compiled code
+    5.verify the integrity of package
+    6.install the package in local repo
+    7.deploy the package in remote repo
+
+    pmd is a source code analyzer
+    ->finds unused variable
+    ->find unused imports
+    ->empty catch block
+    ->no usage of object
+    ->finds dublicate code
+
+    controllers
+    ->@controller->class is responsible for handling incoming http req(separatley write @response body)
+    ->@restcontroller->controller+response body
+    ->@reponse body->indicates teh http response body     return type
+    @requestmapping->mapping of an api
+
+     reflection->it is used toe xamine classes methods feilds interfaces at runtime and also possible to change the behaviour of the class repo
+     the class object can be created by 3 ways in it
+     1-.forname
+     2-.class
+     3-.getclass
+     it is included in java.lang.reflect
+
+
+
+
+
+                                                                                                                                    
+
+
+
